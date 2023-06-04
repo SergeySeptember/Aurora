@@ -11,7 +11,8 @@ namespace Aurora.Controllers
     [Route("api/[controller]")]
     public class Controller : ControllerBase
     {
-        [HttpGet]
+
+        [HttpGet("/About")]
         public IEnumerable<Ads> Get()
         {
             var ads = ProductRepository.GetAds().OrderByDescending(s => s.Id);
@@ -19,12 +20,11 @@ namespace Aurora.Controllers
         }
 
         [HttpPost]
-        public string Post([FromHeader] string Header, [FromHeader] string Body)
+        public string Post([FromBody] LoginData data)
         {
-           string result = ProductRepository.InsertAd(Header, Body);
+           string result = ProductRepository.InsertAd(data);
            return result;
         }
 
     }
 }
-//

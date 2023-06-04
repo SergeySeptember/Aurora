@@ -13,13 +13,16 @@ namespace Aurora.Repository
                 return allAds;
             };
         }
-        public static string InsertAd(string Header, string Body)
+        public static string InsertAd(LoginData data)
         {
+            string Header = data.header;
+            string Body = data.body;
+            
             if (!string.IsNullOrWhiteSpace(Header) && !string.IsNullOrWhiteSpace(Body))
             {
                 Header = Header.Trim();
                 Body = Body.Trim();
-
+                
                 using (AdsContext db = new AdsContext())
                 {
                     db.Ads.AddRange(new Ads { Header = Header, Body = Body, Date_create = DateTime.Now });
