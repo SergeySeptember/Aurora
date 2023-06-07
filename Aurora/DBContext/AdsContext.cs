@@ -1,20 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Aurora.Entity;
+using Microsoft.Extensions.Configuration;
 
 namespace Aurora.DBContext
 {
     public class AdsContext : DbContext
     {
-        public readonly AdsContext _dbContext;
 
-        //public AdsContext(AdsContext dbContext)
-        //{
-        //    _dbContext = dbContext;
-        //}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"host=localhost;port=5432;database=ads_base;username=admin;password=admin");
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            string connectionString = configuration.GetConnectionString("PostgresDatabase");
+
+            optionsBuilder.UseNpgsql(connectionString);
         }
+
         public DbSet<Ads> Ads { get; set; }
 
     }

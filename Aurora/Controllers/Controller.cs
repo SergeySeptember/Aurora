@@ -1,9 +1,6 @@
 using Aurora.Entity;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections;
 using Aurora.Repository;
-using Aurora.DBContext;
-using System.Reflection.PortableExecutable;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Aurora.Controllers
 {
@@ -20,7 +17,7 @@ namespace Aurora.Controllers
         }
 
         [HttpPost]
-        public string Post([FromBody] LoginData data)
+        public string Post([FromBody] BodyData data)
         {
            string result = ProductRepository.InsertAd(data);
            return result;

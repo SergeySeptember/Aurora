@@ -1,4 +1,5 @@
-﻿using Aurora.DBContext;
+﻿using Aurora.Controllers;
+using Aurora.DBContext;
 using Aurora.Entity;
 
 namespace Aurora.Repository
@@ -7,31 +8,29 @@ namespace Aurora.Repository
     {
         public static IEnumerable<Ads> GetAds()
         {
-            using (AdsContext db = new AdsContext())
+            using (AdsContext db = new())
             {
                 var allAds = db.Ads.ToList();
                 return allAds;
             };
         }
-        public static string InsertAd(LoginData data)
+        public static string InsertAd(BodyData data)
         {
-            string Header = data.header;
-            string Body = data.body;
-            
-            if (!string.IsNullOrWhiteSpace(Header) && !string.IsNullOrWhiteSpace(Body))
+            string header = data.header;
+            string body = data.body;
+
+            if (string.IsNullOrWhiteSpace(header) || string.IsNullOrWhiteSpace(body)) return "Empty or Null";
             {
-                Header = Header.Trim();
-                Body = Body.Trim();
-                
-                using (AdsContext db = new AdsContext())
+                header = header.Trim();
+                body = body.Trim();
+
+                using (AdsContext db = new())
                 {
-                    db.Ads.AddRange(new Ads { Header = Header, Body = Body, Date_create = DateTime.Now });
+                    db.Ads.AddRange(new Ads { Header = header, Body = body, Date_create = DateTime.Now });
                     db.SaveChanges();
                 };
                 return "Success!";
             }
-
-            return "Emty or Null";
         }
     }
 }
