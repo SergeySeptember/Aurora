@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Aurora.Entity;
-using Microsoft.Extensions.Configuration;
+﻿using Aurora.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aurora.DBContext
 {

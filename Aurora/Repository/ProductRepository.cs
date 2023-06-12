@@ -4,6 +4,7 @@ using Aurora.Entity;
 
 namespace Aurora.Repository
 {
+    // TODO: Add the route
     public static class ProductRepository
     {
         public static IEnumerable<Ads> GetAds()
@@ -30,6 +31,16 @@ namespace Aurora.Repository
                     db.SaveChanges();
                 };
                 return "Success!";
+            }
+
+        }
+
+        public static Ads GetAdById(int id)
+        {
+            using (AdsContext db = new())
+            {
+                var adById = db.Ads.FirstOrDefault(a => a.Id == id);
+                return adById;
             }
         }
     }
