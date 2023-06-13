@@ -5,29 +5,37 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aurora.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("board")]
     public class Controller : ControllerBase
     {
 
-        [HttpGet("get-ads")]
+        [HttpGet("ads")]
         public IEnumerable<Ads> Get()
         {
             var ads = ProductRepository.GetAds().OrderByDescending(s => s.Id);
             return ads;
         }
 
-        [HttpGet("get-ad-by-id/{id}")]
-        public Ads GetAdById(int id)
+        [HttpGet("ad-by-id/{id}")]
+        public IActionResult GetAdById(int id)
         {
             var ad = ProductRepository.GetAdById(id);
-            return ad;
+            if (ad == null)
+            {
+                return BadRequest("Id not found");
+            }
+            return Ok(ad);
         }
 
-        [HttpPost("post-ad")]
-        public string Post([FromBody] BodyData data)
+        [HttpPost("ad")]
+        public IActionResult Post([FromBody] BodyData data)
         {
             string result = ProductRepository.InsertAd(data);
-            return result;
+            if (result == "Success!")
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

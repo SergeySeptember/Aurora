@@ -1,0 +1,31 @@
+version: "3"
+networks:
+  connection-container:
+    driver: bridge
+services:
+  app: 
+    container_name: aurora_server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - connection-container
+    depends_on:
+      - postgres_db
+  postgres_db:
+    container_name: aurora_db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: Bulletin_board
+    ports:
+      - "5432:5432"
+    networks:
+      - connection-container
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:

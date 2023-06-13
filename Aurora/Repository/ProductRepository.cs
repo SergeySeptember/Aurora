@@ -4,7 +4,6 @@ using Aurora.Entity;
 
 namespace Aurora.Repository
 {
-    // TODO: Add the route
     public static class ProductRepository
     {
         public static IEnumerable<Ads> GetAds()
@@ -20,7 +19,7 @@ namespace Aurora.Repository
             string header = data.header;
             string body = data.body;
 
-            if (string.IsNullOrWhiteSpace(header) || string.IsNullOrWhiteSpace(body)) return "Empty or Null";
+            if (!string.IsNullOrWhiteSpace(header) && !string.IsNullOrWhiteSpace(body))
             {
                 header = header.Trim();
                 body = body.Trim();
@@ -32,7 +31,7 @@ namespace Aurora.Repository
                 };
                 return "Success!";
             }
-
+            return "Value must be string, not empty, not null";
         }
 
         public static Ads GetAdById(int id)

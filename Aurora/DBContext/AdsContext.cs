@@ -1,11 +1,11 @@
 ﻿using Aurora.Entity;
+using Aurora.Env;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aurora.DBContext
 {
     public class AdsContext : DbContext
     {
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
@@ -13,7 +13,7 @@ namespace Aurora.DBContext
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            string connectionString = configuration.GetConnectionString("PostgresDatabase");
+            string connectionString = DotEnv.LoadSettings();
 
             optionsBuilder.UseNpgsql(connectionString);
         }

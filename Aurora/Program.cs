@@ -1,9 +1,16 @@
+using Aurora.DBContext;
+
 namespace Aurora
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+
+            using (AdsContext db = new())
+            {
+                db.Database.EnsureCreated();
+            }
 
             var builder = WebApplication.CreateBuilder(args);
 
